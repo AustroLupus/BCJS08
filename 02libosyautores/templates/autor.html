@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% from 'macros.html' import menu_active %}
+{% block main %}
+	{{menu_active('','active','')}}
+	<div class="container p-5">
+		<h1>{{autor.nombre}} {{autor.apellido}}</h1>
+		<br>
+		<div class="container ms-3">
+			<h4>ID: {{autor.id}}</h4>
+			<div class="row">
+				<div class="col-2">
+					<h4>Notas: {{libro_autor.nombre}}</h4>
+				</div>
+				<div class="col-6">
+					<p>{{autor.notas}}</p>
+				</div>
+			</div>
+			<h4>Libros:</h4>
+			<ul>
+				{%for libro in libros%}
+					<form action="/eliminar2/{{libro.id}}/{{autor.id}}" method="post">
+						<li>{{libro.titulo}}<button class="btn btn-link">Quitar</button></li>
+					</form>
+				{%endfor%}  
+			</ul>
+			<form action="/{{autor.id}}/add_libro" method="post">
+				<div class="row">
+					<div class="col-4">		
+						<select class="form-select" aria-label="Default select example" name="libro_id">
+							  <option selected>Selecciona el libro</option>
+								{%for libro in otros_libros%}
+							  		<option value="{{libro.id}}">{{libro.titulo}}</option>
+								{%endfor%}  
+						</select>	
+					</div>
+					<div class="col-5">
+						<button type="submit" class="btn btn-primary">Agregar</button>
+					</div>	
+				</div>
+			</form>
+		</div>	
+	</div>
+{% endblock %}	

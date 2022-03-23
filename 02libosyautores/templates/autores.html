@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% from 'macros.html' import menu_active %}
+{% block main %}
+	{{menu_active('','active','')}}
+	<div class="container p-5">
+		<div class="row">
+			<div class="col-5 p-4">
+				<h2>Agrega un autor</h2>
+				<form action="/api/autores" method="post">
+						  <div class="mb-3">
+						    <label for="exampleInputEmail1" class="form-label">Nombre</label>
+						    <input type="text" class="form-control" id="nombre_autor" name="nombre_autor" required>
+						  </div>
+						  <div class="mb-3">
+						    <label for="exampleInputEmail1" class="form-label">Apellido</label>
+						    <input type="text" class="form-control" id="apellido_autor" name="apellido_autor" required>
+						  </div>
+						  <div class="mb-3">
+						    <label for="exampleInputPassword1" class="form-label">Notas</label>
+						    <textarea class="form-control" id="notas" name="notas" rows="3" required></textarea>
+						  </div>
+						  <button type="submit" class="btn btn-primary">Agregar</button>
+				</form>
+			</div>
+			<div class="col-6 offset-1 p-4">
+				<table class="table">
+				  <thead>
+				    <tr>
+				      <th scope="col">Id</th>
+				      <th scope="col">Nombre</th>
+				      <th scope="col">Apellido</th>
+				      <th scope="col">Notas</th>
+				      <th scope="col">Accion</th>
+				    </tr>
+				  </thead>
+				  <tbody id="tabla">
+				    {%for autor in autores%}
+					    <tr>
+					      <th scope="row">{{autor.id}}</th>
+					      <td>{{autor.nombre}}</td>
+					      <td>{{autor.apellido}}</td>
+					      <td>{{autor.notas}}</td>
+					      <form action="/eliminar2/{{autor.id}}">
+					      	<td class="text-center"><a href="/autor/{{autor.id}}">Ver</a><br><button class="btn btn-link btn-sm">Quitar</button></td>
+					      </form>
+					    </tr>
+					{% endfor %}
+				  </tbody>
+				</table>
+			</div>
+		</div>		
+	</div>
+{% endblock %}

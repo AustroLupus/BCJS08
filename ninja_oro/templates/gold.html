@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block main %}
+
+<div class="row">
+  <div class="col-4">
+    <div class="container">
+      <div class="row">
+        <div class="col">Tus oros = {{ oros }} </div>
+<!--         <div class="col-4">
+          <input type="text" class="form-control" value= {{ oros }} name="current_gold" id="current_gold">
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-3">
+    <form action="/gold/process_money" method="post">
+      <input type="hidden" value="granja" name="origen">
+      <div class="card text-center">
+        <div class="card-header">Granja</div>
+        <div class="card-body">(gana 10-20 oros)</div>
+        <div class="card-footer"><button type="submit" class="btn btn-warning">Encontrar Oro!</button></div>
+      </div>
+    </form>
+  </div>
+  <div class="col-3">
+    <form action="/gold/process_money" method="post">
+      <input type="hidden" value="cueva" name="origen">
+      <div class="card text-center">
+        <div class="card-header">Cueva</div>
+        <div class="card-body">(gana 5-10 oros)</div>
+        <div class="card-footer"><button class="btn btn-warning">Encontrar Oro!</button></div>
+      </div>
+    </form>
+  </div>
+  <div class="col-3">
+    <form action="/gold/process_money" method="post">
+      <input type="hidden" value="casa" name="origen">
+      <div class="card text-center">
+        <div class="card-header">Casa</div>
+        <div class="card-body">(gana 2-5 oros)</div>
+        <div class="card-footer"><button class="btn btn-warning">Encontrar Oro!</button></div>
+      </div>
+    </form>
+  </div>
+  <div class="col-3">
+    <form action="/gold/process_money" method="post">
+      <input type="hidden" value="casino" name="origen">
+      <div class="card text-center">
+        <div class="card-header">Casino</div>
+        <div class="card-body">(gana/pierde 0-50 oros)</div>
+        <div class="card-footer"><button class="btn btn-warning">Encontrar Oro!</button></div>
+      </div>
+    </form>
+  </div>
+</div>
+<br>
+<div class="row">
+  <label for="actividades">Actividades:</label>
+  <textarea class="form-control" rows="5" id="actividades" name="actividades">{{ mensaje }}</textarea>
+</div>
+<script type="text/javascript">
+  /* let mensaje=''
+  function autoexec(){
+    //mensaje +='Gano {{ ganancia }} oros desde {{ lugar }} ({{ hora }})\n'
+    document.getElementById('actividades').value= {{ mensaje }};
+  }
+  autoexec() */
+</script>
+{% endblock %}
