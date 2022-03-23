@@ -55,6 +55,9 @@ app.get('/gold', (req, res) => {
         req.session.oros = 0
         mensaje=''
     }
+    if (!req.session.mensajes){
+        req.session.mensajes = []
+    }
     res.render('gold.html',{oros:req.session.oros,mensaje})
 });
 
@@ -62,6 +65,7 @@ app.post('/gold/process_money', async (req, res) => {
     //req.session.oros += await process_money(req.body.origen)
     let miRetorno = await process_money(req.body.origen)
     console.log(miRetorno);
+    req.session.mensajes.push(miRetorno)
     req.session.oros += miRetorno.ganancia
     laGanancia=miRetorno.ganancia
     laHora=miRetorno.hora
