@@ -65,6 +65,14 @@
 <div class="row">
   <label for="actividades">Actividades:</label>
   <textarea class="form-control" rows="5" id="actividades" name="actividades">{{ mensaje }}</textarea>
+  {% for mensaje in mensajes %}
+  Gano {{ mensaje.ganancia }} en {{ mensaje.lugar }} ({{ mensaje.hora }} )<br>
+  {% if mensaje.ganancia >0 %}
+  Gan&oacute; {{ mensaje.ganancia }}
+  
+  {% endfor %}
+
+
 </div>
 <script type="text/javascript">
   /* let mensaje=''

@@ -58,7 +58,7 @@ app.get('/gold', (req, res) => {
     if (!req.session.mensajes){
         req.session.mensajes = []
     }
-    res.render('gold.html',{oros:req.session.oros,mensaje})
+    res.render('gold.html',{oros:req.session.oros,mensaje,mensajes:req.session.mensajes})
 });
 
 app.post('/gold/process_money', async (req, res) => {
@@ -86,6 +86,7 @@ app.post('/gold/process_money', async (req, res) => {
 app.get('/gold/mata', (req,res)=>{
     req.session.oros =0
     mensaje=''
+    req.session.mensajes = []
     res.redirect('/gold')
 })
 
