@@ -1,68 +1,19 @@
 {% extends 'layout.html' %}
-
-{% block styles %}
-<style>
-  .m-azul {
-    background-color: cornflowerblue;
-  }
-  a:link{
-    color: #000060;
-  }
-  a:visited{
-    color: #802200;
-  }
-  .cajaComentario {
-    padding: 3rem;
-    border: 2px solid black;
-    border-radius: 1rem;
-  }
-</style>
-{% endblock %}
+{% from 'macros.html' import navbar %}
 
 {% block main %}
-<nav class="navbar navbar-expand-lg navbar-dark m-azul rounded">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
-      </ul>
-      <div class="d-flex">
-        <button class="btn btn-light text-primary" type="submit">Logout</button>
-      </div>
-    </div>
-  </div>
-</nav>
+  {{ navbar('/') }}
 
-<h1 class="text-center">Bienvenid@ a El Muro</h1>
+
+<h1 class="text-center">Bienvenid@ a El Muro {{ user.name }}</h1>
 <h2 class="text-center">Una p&aacute;gina para nada cl&oacute;nica de otra red social</h2>
 <br>
-<label for="comentarios">Comentarios:</label>
-<textarea class="form-control" rows="5" id="comentarios" name="comentarios"></textarea>
-<div class="clearfix pt-1">
-  <button class="float-end btn m-azul text-white">Publicar un mensaje</button>
-</div>
+<form action="/comentar" method="post">
+  <label for="comentarios">Comentarios:</label>
+  <textarea class="form-control" rows="5" id="comentarios" name="comentarios"></textarea>
+  <div class="clearfix pt-1">
+    <button class="float-end btn m-azul text-white" action="submit">Publicar un mensaje</button>
+  </div>
+</form>
 
 {% endblock %}
