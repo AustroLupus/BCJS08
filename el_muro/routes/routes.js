@@ -1,4 +1,6 @@
 const express = require('express')
+const { get_messages
+} = require('../db.js')
 
 const router = express.Router()
 
@@ -10,8 +12,10 @@ function protected_route (req, res, next) {
 }
 
 // RUTAS
-router.get('/', protected_route, (req, res) => {
-  res.render('index.html')
+router.get('/', protected_route, async (req, res) => {
+  const messages = await get_messages()
+  console.log(messages)
+  res.render('index.html',{messages})
 })
 
 router.get('/seguidos', protected_route, (req, res) => {

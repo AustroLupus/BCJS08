@@ -1,6 +1,7 @@
 const express = require('express')
 const bcrypt = require('bcrypt')
-const { get_user, create_user } = require('../db.js')
+const { get_user, create_user, get_userId, create_message,
+} = require('../db.js')
 
 const router = express.Router()
 
@@ -73,7 +74,12 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/comentar', async (req, res)=>{
-    console.log(req.body)
+    console.log(`req.body.comentarios : ${req.body.comentarios}`)
+    console.log(`req.session.user.name : ${req.session.user.name}`)
+    const userId = await get_userId(req.session.user.name)
+    console.log(`userId : ${userId}`)
+    console.log(typeof(userId))
+    await create_message(userId, req.body.comentarios)
     res.redirect('/')
 })
 

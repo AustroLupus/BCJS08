@@ -16,4 +16,13 @@
   </div>
 </form>
 
+{% for message in messages %}
+<div class="pt-5">
+  Mensaje de {{ message.name }} <br>
+  <div class="cajaMensaje">
+    <p>{{ message.message }}</p>
+  </div>
+</div>
+{% endfor %}
+
 {% endblock %}

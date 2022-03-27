@@ -37,6 +37,40 @@ async function create_user(name, email, password) {
 
 }
 
+async function get_userId(name){
+  const client = await pool.connect()
+
+  const { rows } =await client.query({
+    text: `select id from users where name =$1`,
+    values: [name]
+  })
+  client.release()
+  return rows[0].id
+}
+
+async function create_message(userID, message){
+  const client = await pool.connect()
+
+  await client.query({
+    text: 'insert into messages (user_id, message) values ($1, $2)',
+    values: [userID, message]
+  })
+
+  client.release()
+
+}
+
+async function get_messages(){
+  const client = await pool.connect()
+
+  const { rows } =await client.query({
+    text: 'select messages.message,users.name from messages join users on messages.user_id=users.id'
+  })
+
+  client.release()
+  return rows
+}
+
 module.exports = {
-  get_user, create_user
+  get_user, create_user, get_userId, create_message, get_messages
 }
