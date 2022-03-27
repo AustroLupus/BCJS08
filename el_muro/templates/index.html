@@ -8,21 +8,36 @@
 <h1 class="text-center">Bienvenid@ a El Muro {{ user.name }}</h1>
 <h2 class="text-center">Una p&aacute;gina para nada cl&oacute;nica de otra red social</h2>
 <br>
-<form action="/comentar" method="post">
-  <label for="comentarios">Comentarios:</label>
-  <textarea class="form-control" rows="5" id="comentarios" name="comentarios"></textarea>
+<form action="/create_message" method="post">
+  <label for="mensajes">Mensaje:</label>
+  <textarea class="form-control" rows="5" id="mensajes" name="mensajes" required></textarea>
   <div class="clearfix pt-1">
     <button class="float-end btn m-azul text-white" action="submit">Publicar un mensaje</button>
   </div>
 </form>
 
 {% for message in messages %}
-<div class="pt-5">
+<div class="mt-4 mb-4 ms-4">
   Mensaje de {{ message.name }} <br>
-  <div class="cajaMensaje">
+  <div class="m-areaMensaje">
     <p>{{ message.message }}</p>
+  </div>
+  <div class="m-5">
+    {% for comment in comments %}
+    {% if message.msg_id == comment.message_id %}
+    {{ comment.name }} coment&oacute;: <br>
+    <div class="m-areaComentario">{{comment.comment}}</div>
+    {% endif %}
+    {% endfor %}
+    <form action="/create_comment" method="post">
+      <label for="mensajes">Comentario:</label>
+      <textarea class="form-control" rows="3" id="comentario" name="comentario" required></textarea>
+      <input type="hidden" name="msg_id" id="msg_id" value="{{ message.msg_id }}">
+      <div class="clearfix pt-1">
+        <button class="float-end btn m-commentBoxBtn text-white" action="submit">Publicar comentario</button>
+      </div>
+    </form>
   </div>
 </div>
 {% endfor %}
-
 {% endblock %}

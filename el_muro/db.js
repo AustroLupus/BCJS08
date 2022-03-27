@@ -1,4 +1,7 @@
 const { Pool } = require('pg')
+const moment = require('moment')
+
+moment.locale('es-mx')
 
 const pool = new Pool({
   user: 'ziggywlz',
@@ -41,7 +44,7 @@ async function get_userId(name){
   const client = await pool.connect()
 
   const { rows } =await client.query({
-    text: `select id from users where name =$1`,
+    text: `select id from users where name=$1`,
     values: [name]
   })
   client.release()
@@ -60,17 +63,46 @@ async function create_message(userID, message){
 
 }
 
+async function create_comment(message_id, user_id, comment){
+  const client = await pool.connect()
+
+  await client.query({
+    text: 'insert into comments (message_id, user_id, comment) values ($1, $2, $3)',
+    values: [message_id, user_id, comment]
+  })
+
+  client.release()
+
+}
+
 async function get_messages(){
   const client = await pool.connect()
 
   const { rows } =await client.query({
-    text: 'select messages.message,users.name from messages join users on messages.user_id=users.id'
+    text: 'select messages.message, users.name, messages.id as msg_id from messages join users on messages.user_id=users.id'
   })
 
   client.release()
   return rows
 }
 
+async function get_comments(){
+  const client = await pool.connect()
+
+  const { rows } =await client.query({
+    text: 'select comments.comment, comments.message_id, users.name from comments join users on comments.user_id=users.id'
+  })
+
+  client.release()
+  return rows
+}
+
+function formatDate (date){
+  const dateFormat = moment(date).format("L");
+  const timeFormat = moment(date).format("LTS");
+  return `${dateFormat} ${timeFormat}`;
+}
+
 module.exports = {
-  get_user, create_user, get_userId, create_message, get_messages
+  get_user, create_user, get_userId, create_message, get_messages, create_comment, get_comments
 }
