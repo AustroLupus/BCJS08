@@ -14,7 +14,6 @@ function protected_route (req, res, next) {
 // RUTAS
 router.get('/', protected_route, async (req, res) => {
   const messages = await get_messages()
-  console.log(messages)
   res.render('index.html',{messages})
 })
 

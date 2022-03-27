@@ -74,11 +74,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/comentar', async (req, res)=>{
-    console.log(`req.body.comentarios : ${req.body.comentarios}`)
-    console.log(`req.session.user.name : ${req.session.user.name}`)
     const userId = await get_userId(req.session.user.name)
-    console.log(`userId : ${userId}`)
-    console.log(typeof(userId))
     await create_message(userId, req.body.comentarios)
     res.redirect('/')
 })
