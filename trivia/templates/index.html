@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+{% from 'macros.html' import navbar %}
+
+{% block main %}
+  {{ navbar('/', user.es_admin ) }}
+
+
+<h1 class="text-center">Bienvenid@ a Las Trivias {{ user.name }}</h1>
+<br>
+<div class="row">
+  <div class="col-8 offset-2 trv-cajaMensaje text-center">
+    <a href="/jugar" class="btn btn-primary btn-lg">&iexcl;Jugar!</a>
+    <br><br>
+    <p>Haga click en el bot&oacute;n para iniciar la trivia.</p>
+  </div>
+</div>
+<br><br>
+<table class="table table-striped table-bordered border-dark">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Puntaje</th>
+      <th scope="col">Porcentaje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tina</td>
+      <td>3/3</td>
+      <td>100%</td>
+    </tr>
+    <tr>
+      <td>Joe</td>
+      <td>2/3</td>
+      <td>66.7%</td>
+    </tr>
+    <tr>
+      <td>Junni</td>
+      <td>2/3</td>
+      <td>66.7%</td>
+    </tr>
+    <tr>
+      <td>Eleanot</td>
+      <td>1/3</td>
+      <td>33.3%</td>
+    </tr>
+    <tr>
+      <td>Junni</td>
+      <td>1/3</td>
+      <td>33.3%</td>
+    </tr>
+  </tbody>
+</table>
+
+{% for message in messages %}
+<div class="mt-4 mb-4 ms-4">
+  Mensaje de {{ message.name }} <br>
+  <div class="m-areaMensaje">
+    <p>{{ message.message }}</p>
+  </div>
+  <div class="m-5">
+    {% for comment in comments %}
+    {% if message.msg_id == comment.message_id %}
+    {{ comment.name }} coment&oacute;: <br>
+    <div class="m-areaComentario">{{comment.comment}}</div>
+    {% endif %}
+    {% endfor %}
+    <form action="/create_comment" method="post">
+      <label for="mensajes">Comentario:</label>
+      <textarea class="form-control" rows="3" id="comentario" name="comentario" required></textarea>
+      <input type="hidden" name="msg_id" id="msg_id" value="{{ message.msg_id }}">
+      <div class="clearfix pt-1">
+        <button class="float-end btn m-commentBoxBtn text-white" action="submit">Publicar comentario</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

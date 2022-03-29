@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<div class="row justify-content-between bg-black text-white rounded p-2">
+    <div class="col-4">
+      Doctor's Appointments
+    </div>
+    <div class="col-4 text-center">
+      <a href="/logout" class="btn btn-dark">Logout</a>
+    </div>
+</div>
+  <!-- Aca va la la barra de busqueda -->
+<div class="row justify-content-end mt-2 mb-2">
+    <div class="col-4">
+        <div class="clearfix">
+            <span class="float-end"><button class="btn btn-primary">Search</button></span>
+        </div>
+    </div>
+    <div class="col-4">
+        <input type="text" class="form-control" name="search" id="search" placeholder="Search...">
+    </div>
+</div>
+  <!-- Aca va la tabla de con las citas -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Time</th>
+      <th scope="col">Patient name</th>
+      <th scope="col">Complain</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>October 7 2014</td>
+      <td>8:00 AM</td>
+      <td>KB Tonel</td>
+      <td>Back Pain</td>
+    </tr>
+    <tr>
+      <td>October 08 2014</td>
+      <td>8:00 AM</td>
+      <td>Rozen Macapagal</td>
+      <td>Regular check-up</td>
+    </tr>
+    <tr>
+      <td>October 08 2014</td>
+      <td>1:00 PM</td>
+      <td>Matthew Santorro</td>
+      <td>Follow up jaw lock</td>
+    </tr>
+  </tbody>
+</table>
+<div class="row justify-content-end">
+  <div class="col-4">
+      <div class="clearfix">
+          <span class="float-end">
+            <a href="/appointment" class="btn btn-primary">Add new appointment</a>
+          </span>
+      </div>
+  </div>
+</div>
+
+{% endblock %}
