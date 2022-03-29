@@ -9,20 +9,20 @@
     <div class="trv-cajaPregunta">
         {{pregunta.question}}
         <div class="form-check">
-            <input type="radio" class="form-check-input" id="radio1" name="radiosp{{pregunta.id}}" value="{{pregunta.p1}}">{{pregunta.p1}}
-            <label class="form-check-label" for="radio1"></label>
+            <input type="radio" class="form-check-input" id="radio1" name="radiosp{{pregunta.id}}" value="{{pregunta.p1}}">
+            <label class="form-check-label">{{pregunta.p1}}</label>
           </div>
           <div class="form-check">
-            <input type="radio" class="form-check-input" id="radio2" name="radiosp{{pregunta.id}}" value="{{pregunta.p2}}">{{pregunta.p2}}
-            <label class="form-check-label" for="radio2"></label>
+            <input type="radio" class="form-check-input" id="radio2" name="radiosp{{pregunta.id}}" value="{{pregunta.p2}}">
+            <label class="form-check-label">{{pregunta.p2}}</label>
           </div>
           <div class="form-check">
-            <input type="radio" class="form-check-input" id="radio3" name="radiosp{{pregunta.id}}" value="{{pregunta.p3}}">{{pregunta.p3}}
-            <label class="form-check-label"></label>
+            <input type="radio" class="form-check-input" id="radio3" name="radiosp{{pregunta.id}}" value="{{pregunta.p3}}">
+            <label class="form-check-label">{{pregunta.p3}}</label>
         </div>
     </div>
+    <input type="hidden" name="id" value="{{pregunta.id}}">
     {% endfor %}
-
     <div class="row justify-content-end mt-2 mb-2">
         <div class="col-4">
             <div class="clearfix">
