@@ -14,3 +14,10 @@ fake_one varchar (255) not null,
 fake_two varchar (255) not null
 );
 
+create table puntajes (
+id serial primary key not null,
+id_user integer references users(id),
+date date default now(),
+score integer not null
+);
+
