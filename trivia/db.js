@@ -126,8 +126,19 @@ async function get_scores(){
   return rows
 }
 
+async function find_user(user){
+  const client = await pool.connect()
+
+  const { rows } = await client.query({
+    text: "select users.name, puntajes.score from puntajes join users on puntajes.id_user=users.id where users.name like %$1%",
+    values: [user]
+  })
+  client.release()
+  return rows
+}
+
 module.exports = {
-  get_user, create_user, checkadmin, create_admin, add_question, get_preguntas, shuffle,check_respuesta, add_score, get_scores
+  get_user, create_user, checkadmin, create_admin, add_question, get_preguntas, shuffle,check_respuesta, add_score, get_scores, find_user
 }
 
 

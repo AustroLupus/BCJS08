@@ -1,5 +1,5 @@
 const express = require('express')
-const {add_question,get_preguntas,shuffle, check_respuesta, add_score, get_scores
+const {add_question,get_preguntas,shuffle, check_respuesta, add_score, get_scores,find_user
 } = require('../db.js')
 
 const router = express.Router()
@@ -17,12 +17,13 @@ router.get('/', protected_route, async (req, res) => {
   //const comments = await get_comments()
   //res.render('index.html',{messages, comments})
   const scores = await get_scores()
-  res.render('index.html', {scores})
+  const notices = req.flash('notices')
+  res.render('index.html', {scores,notices})
 })
 
 router.get('/agregar_pregunta', protected_route, (req, res) => {
-  const notices = req.flash('notices')
-  res.render('agregar_pregunta.html', { notices })
+  
+  res.render('agregar_pregunta.html',)
 })
 
 router.get('/jugar', protected_route, async (req, res) => {
@@ -66,7 +67,14 @@ router.post('/enviar_respuestas', protected_route, async (req, res) => {
     }
   }
   await add_score(req.session.user.id,puntaje)
-    res.redirect('/jugar')
+  req.flash('notices','Eso estuvo genial '+req.session.user.name+'! Tu puntaje es '+puntaje+' ('+Math.round(puntaje/3*100)+'%)')
+  res.redirect('/')
+});
+
+router.post('/search_players', protected_route, async (req, res) => {
+  const scores = await find_user(req.body.search)
+  console.log(req.body.search)
+  res.render('index.html',{scores})
 });
 
 module.exports = router
