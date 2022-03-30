@@ -1,5 +1,5 @@
 const express = require('express')
-const {add_question,get_preguntas,shuffle
+const {add_question,get_preguntas,shuffle, check_respuesta, add_score, get_scores
 } = require('../db.js')
 
 const router = express.Router()
@@ -16,7 +16,8 @@ router.get('/', protected_route, async (req, res) => {
   //const messages = await get_messages()
   //const comments = await get_comments()
   //res.render('index.html',{messages, comments})
-  res.render('index.html')
+  const scores = await get_scores()
+  res.render('index.html', {scores})
 })
 
 router.get('/agregar_pregunta', protected_route, (req, res) => {
@@ -54,7 +55,17 @@ router.post('/crear_pregunta', protected_route, async (req, res) => {
 });
 
 router.post('/enviar_respuestas', protected_route, async (req, res) => {
-  console.log(req.body)
+  let pregId =req.body.id
+  let puntaje =0
+  for (let elId of pregId){
+    let nombrePregunta = req.body['radiosp'+elId]
+    const pregunta = nombrePregunta
+    const revision = await check_respuesta(elId,pregunta)
+    if(revision){
+      puntaje++
+    }
+  }
+  await add_score(req.session.user.id,puntaje)
     res.redirect('/jugar')
 });
 

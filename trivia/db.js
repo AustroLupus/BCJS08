@@ -97,8 +97,37 @@ function shuffle(array) {
   return array;
 }
 
+async function check_respuesta(id,pregunta){
+  const client = await pool.connect()
+  const {rows} = await client.query({
+    text: 'select answer=$1 as revision from questions where id=$2',
+    values: [pregunta,id]
+  })
+  client.release()
+  return rows[0].revision
+}
+
+async function add_score(id,score){
+  const client = await pool.connect()
+  await client.query({
+    text: 'insert into puntajes (id_user,score) values ($1, $2)',
+    values: [id, score]
+  })
+  client.release()
+}
+
+async function get_scores(){
+  const client = await pool.connect()
+
+  const { rows } = await client.query({
+    text: 'select users.name, puntajes.score from puntajes join users on puntajes.id_user=users.id'
+  })
+  client.release()
+  return rows
+}
+
 module.exports = {
-  get_user, create_user, checkadmin, create_admin, add_question, get_preguntas, shuffle
+  get_user, create_user, checkadmin, create_admin, add_question, get_preguntas, shuffle,check_respuesta, add_score, get_scores
 }
 
 
